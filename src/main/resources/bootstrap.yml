@@ -1,0 +1,51 @@
+#set the cloud config url using pcf environment variables
+spring:
+  application:
+    name: transaction-handler-service
+  info:
+    application_kit_version: 2.1.8
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  cloud:
+    config:
+      uri: http://icsconfig-3537311-dev.app.clwdev4-az1.paas.fedex.com
+      label: activeDevelopment
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  cloud:
+    config:
+      uri: http://icsconfig-3537311-dev.app.clwdev4-az1.paas.fedex.com
+      label: development
+---
+spring:
+  config:
+    activate:
+      on-profile: release
+  cloud:
+    config:
+      uri: http://icsconfig-3537311-release.app.clwdev4-az1.paas.fedex.com
+      label: release
+---
+spring:
+  config:
+    activate:
+      on-profile: volume
+  cloud:
+    config:
+      uri: http://icsconfig-3537311-release.app.clwdev4-az1.paas.fedex.com
+      label: release
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+  cloud:
+    config:
+      uri: http://icsconfig-3537311-production.app.wtccf4.paas.fedex.com
+      label: production

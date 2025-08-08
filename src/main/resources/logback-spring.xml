@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- This will include a console appender and file appender.
+         We don't want that if we are using JSON.
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+     -->
+    <property name="LOG_ROOT" value="/var/fedex/cdv/transHandler/logs/"/>
+    <property name="LOG_FILE_NAME" value="messages"/>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_ROOT}/${LOG_FILE_NAME}.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <jsonFactoryDecorator class="com.fedex.intl.cd.configuration.JacksonJsonConfig"/>
+            <fieldNames>
+                <timestamp>timeStamp</timestamp>
+                <message>message</message>
+                <logger>logger</logger>
+                <thread>thread</thread>
+                <level>level</level>
+                <levelValue>[ignore]</levelValue>
+                <version>[ignore]</version>
+                <stackTrace>stackTrace</stackTrace>
+            </fieldNames>
+        </encoder>
+    </appender>
+
+    <logger name="hello" level="info" additivity="false">
+        <appender-ref ref="FILE"/>
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>
